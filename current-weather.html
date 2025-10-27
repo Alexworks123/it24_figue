@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Current Weather</title>
+</head>
+<body>
+     <h1>Current Weather</h1>
+     <button onclick="getWeather()">get Weather</button>
+     <dev> id=""</dev>  <!-- ❌ Error #1 -->
+    
+</body>
+<script>
+     const apikey = "";  <!-- ❌ Error #2: empty API key -->
+
+     async function getWeather() { 
+        console.log("prompt opened. " + Date());
+        const city = prompt("Enter city name");
+        console.log("Enter a city name");
+
+        if(!city){
+            alert("No city entered");
+             console.log("No city entered " + Date());
+            return;
+        }
+
+        const url =`https://api.openweathermap.org/data/2.5/weather/q=${city}&appid=$[apikey]&units=metric`;
+      
+        
+        try {
+            const response = await fetch (url);
+            if (!response.ok){
+                
+                const data = await response.json();
+
+                const weatherResult = document.getElementById("weatherResult");
+                weatherResult.innerHTML = `
+                <h2>${data.name}, ${data.sys.country}</h2>
+                <p>Temperature: ${data.amin.temp} C</p> 
+                <p>Weather: ${data[0].description}</p>  
+                <p>Wind Speed: ${data.wind.speed} m/s</p>
+                `;
+            }
+
+         }catch (error) {
+           alert("Error:" + error.message);
+            console.log("Error  occurred" + new date()); 
+         }
+     }
+</script>
+</html>
+```
+
